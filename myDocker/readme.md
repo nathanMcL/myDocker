@@ -69,7 +69,7 @@ In the Docker terminal enter: <br>
 `New-Item -Path . -Name "Dockerfile" -ItemType "file"` <br>
 
 
-Next in `VS code` enter the following...<br>
+Next in `VS code`,`dockerfile` enter the following...<br>
 
 
 ```
