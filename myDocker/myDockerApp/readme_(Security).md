@@ -28,7 +28,7 @@ USER appuser
 
 ` docker run --read-only --memory=128 --cpus=0.5 mydockerapp ` <br>
 
-- `--read-only`  -> Makes the filessystem immutable. <br>
+- `--read-only`  -> Makes the files system immutable. <br>
 - `--memory=128` -> Limits memory usage. <br>
 - `--cpu=0.5`    -> Limits CPU consumption. <br>
 
