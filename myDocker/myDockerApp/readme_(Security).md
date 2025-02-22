@@ -73,3 +73,66 @@ The reason I am choosing `Alpine Linux` is because it claims that it reduces the
 In this section, the idea is to have a log-driven container that `logs` *all* important security events.<br>
 
 We are going to *add to* the `monitor.sh`. <br>
+
+In `monitor.sh` there is already a script to log `unauthorized` pings (ICMP packets) on line `~#27`.<br>
+
+For starters, lets *log* `SSH` and `system access attempts`<br>
+
+`tail -F /var/log/auth.log | tee -a /var/log/security/auth_logs.txt &` <br>
+`tail -F /var/log/auth.log | tee -a /var/log/security/syslog.txt &` <br>
+
+- The `ICMP` pings captures network intrusion attempts. <br>
+- The `SSH` logs unauthorized access attempts.<br>
+
+
+### Isolate the Container Using a Secure Network
+
+By creating a *seperate* *internal network* (`secure-net`). The container now can only acess the internet, but not other containers or internal services.<br>
+
+Enter this command:<br>
+
+```
+docker network create --internal secure-net
+docker run --network=secure-net secure-container
+```
+That command:<br>
+- Blocks direct access from other containers.
+- Allows safe web browsing.
+- Prevents attackers from laterally moving inside the system.
+
+
+### Restrict Internet Access with a Firewall
+
+I don't want to completely isolate the container, starting the `firewall` with this configuration:
+
+```
+
+- Flush exisitng rules to start fresh                        --> Start fresh                                          --> iptables -F
+- Set the *default policy:* Drop all traffic by default.     --> Blocks all incoming connections                      --> iptables -P INPUT DROP, iptables -P FORWARD DROP, iptables -P OUTPUT DROP
+- Allow outbound traffic for web browsing (HHTP & HTTPS)     --> Allows only web browsing and downloading             --> iptables -A OUTPUT -p tcp --dport 80 -j ACCEPT # HTTP, iptables -A OUTPUT -                                                                                                                         p tcp --dport 443 -j ACCEPT # HTTPS
+- Allows DNS resolution (required for domain-based browsing) --> Prevent *malware* from connecting to malicious sites --> iptables -A OUTPUT -p udp --dport 53 -j ACCEPT
+- Allows loopback communication for some processes           --> Ensures system services work (DNS, loopback)         --> iptables -A INPUT -i lo -j ACCEPT, iptables -A OUTPUT -o lo -j ACCEPT
+
+```
+
+### Use a `Proxy Server` for Extra Control
+
+So, before we can go on *quick!* what is a proxy server?<br>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
