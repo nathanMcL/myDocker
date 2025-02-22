@@ -117,8 +117,30 @@ I don't want to completely isolate the container, starting the `firewall` with t
 
 ### Use a `Proxy Server` for Extra Control
 
-So, before we can go on *quick!* what is a proxy server?<br>
+So, before we can go on what is a `proxy server`?<br>
 
+A term `proxy server` acts as an intermediary between a *client* (the container being your secure browsing container) and the internet. Instead of your container directly accessing the web, the `proxy` handles the requests, adding an extra layer of security, monitoring, and control. <br>
+
+What can a Proxy Server provide? <br>
+
+- Intercept requests before they reach the web.
+- Filters traffic (blocks sites, restricts downloads, logs activity/security).
+- Hides the client's real IP address (useful for security and anonymity).
+- Caches content to improve content performance.
+- Enforce *policies* like blocking malicious domains or restricting access.
+
+Usig a `Proxy Server` opens up your container to the internet. It masks you device information. If you set up a proxy server on your device or in the cloud, that `proxy server` becomes the visable surface while browsing the internet...<br>
+
+... So...<br>
+
+I want to create another `Docker Container` with security in-mind, that *hosts* the `proxy server`.<br>
+This other  `proxy container` will *request*, *receive* and *send* (3-way handshake) the users requests.<br>
+
+While the `Container` operator is using the web - there device IP address is masked by the `proxy container`.<br>
+This `Proxy Container` *server* can host addtional security features and logging.<br>
+
+... Later... 
+I could upload this proxy server to my cloud environement to remove it from my device, relocating it to the cloud could provide additional security.<br>
 
 
 
